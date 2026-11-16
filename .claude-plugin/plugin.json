@@ -1,0 +1,8 @@
+{
+  "name": "coohom-freeform-claude",
+  "version": "0.1.0",
+  "description": "Create and edit Coohom Freeform 3D scenes from images and natural language in Claude Code.",
+  "author": {
+    "name": "Rose Architects"
+  }
+}
