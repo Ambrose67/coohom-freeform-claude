@@ -16,7 +16,7 @@ The servers are requested from npm as `latest`; their versions are not pinned by
 To install from this GitHub marketplace, run:
 
 ```sh
-claude plugin marketplace add goldwinambrose/coohom-freeform-claude
+claude plugin marketplace add Ambrose67/coohom-freeform-claude
 claude plugin install coohom-freeform-claude@rose-coohom-freeform
 ```
 
