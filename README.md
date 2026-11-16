@@ -11,24 +11,18 @@ An unofficial Claude Code plugin adaptation of [Coohom Freeform](https://github.
 
 The servers are requested from npm as `latest`; their versions are not pinned by this adaptation. First startup may download dependencies. MCP discovery alone does not prove that browser sign-in, executor connection, scene import, or editing works.
 
-## Try from this folder
+## Install and use
 
-From a terminal, start Claude Code with this plugin directory:
-
-```sh
-claude --plugin-dir /absolute/path/to/coohom-freeform-claude
-```
-
-In Claude Code, run `/coohom-freeform` or ask for a Coohom Freeform scene task. Review the MCP permission prompts. If Lux3D returns an executor URL and requires a browser connection, open that exact URL yourself, sign in to Coohom, connect the page as instructed by the service, and return to Claude Code. Do not paste passwords, cookies, or authorization headers into chat.
-
-To install from the GitHub marketplace after it is published, run:
+To install from this GitHub marketplace, run:
 
 ```sh
-claude plugin marketplace add <GitHub-owner>/coohom-freeform-claude
+claude plugin marketplace add goldwinambrose/coohom-freeform-claude
 claude plugin install coohom-freeform-claude@rose-coohom-freeform
 ```
 
-For a local trial, `claude --plugin-dir /absolute/path/to/coohom-freeform-claude` loads the plugin for that session.
+Restart Claude Code, then run `/coohom-freeform` or ask for a Coohom Freeform scene task. Review the MCP permission prompts. If Lux3D returns an executor URL and requires a browser connection, open that exact URL yourself, sign in to Coohom, connect the page as instructed by the service, and return to Claude Code. Do not paste passwords, cookies, or authorization headers into chat.
+
+For a local trial, run `claude --plugin-dir /absolute/path/to/coohom-freeform-claude` from a terminal.
 
 ## Claude.ai and Cowork
 
@@ -36,7 +30,7 @@ This package targets Claude Code. It is not a Claude.ai connector or Cowork plug
 
 ## Validation status
 
-This is a community adaptation. The MCP configuration and plugin structure should be checked in the target Claude Code version. Full Coohom generation/import acceptance must be confirmed on a user's signed-in account; it can use credits. No scene is generated or modified during installation.
+This is a community adaptation. The plugin and marketplace manifests pass `claude plugin validate`. MCP startup and Coohom generation/import still need verification on a machine with Node.js/npm and a signed-in Coohom account; generation can use credits. No scene is generated or modified during installation.
 
 ## Upstream
 
