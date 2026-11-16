@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "freeform-modeling-mcp": {
+      "command": "npx",
+      "args": ["--yes", "freeform-modeling-mcp@latest"]
+    },
+    "lux3d-mcp-server": {
+      "command": "npx",
+      "args": ["--yes", "@manycore/coohom-lux3d-mcp@latest"]
+    }
+  }
+}
