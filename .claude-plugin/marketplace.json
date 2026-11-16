@@ -1,0 +1,14 @@
+{
+  "name": "rose-coohom-freeform",
+  "description": "Claude Code adaptation of the Coohom Freeform integration.",
+  "owner": {
+    "name": "Rose Architects"
+  },
+  "plugins": [
+    {
+      "name": "coohom-freeform-claude",
+      "source": "./",
+      "description": "Create and edit Coohom Freeform 3D scenes from images and natural language."
+    }
+  ]
+}
