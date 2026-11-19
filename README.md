@@ -4,33 +4,72 @@ An unofficial Claude Code plugin adaptation of [Coohom Freeform](https://github.
 
 ## Requirements
 
-- Claude Code with plugin and MCP support.
-- Node.js/npm available to Claude Code (`npx` must be on `PATH`).
+- Claude Code with plugin and MCP support (CLI or desktop app).
+- **Node.js 20 or newer** with `node` and `npx` on the `PATH` Claude uses. The simplest way on macOS is the LTS installer from nodejs.org.
 - Network access to npm and Coohom.
-- A Coohom account, sign-in, service permissions, and any credits required for image-to-3D generation.
+- A Coohom account. Image-to-3D generation (Lux3D) can use Coohom credits.
 
-The servers are requested from npm as `latest`; their versions are not pinned by this adaptation. First startup may download dependencies. MCP discovery alone does not prove that browser sign-in, executor connection, scene import, or editing works.
-
-## Install and use
-
-To install from this GitHub marketplace, run:
+## Install
 
 ```sh
 claude plugin marketplace add Ambrose67/coohom-freeform-claude
 claude plugin install coohom-freeform-claude@rose-coohom-freeform
 ```
 
-Restart Claude Code, then run `/coohom-freeform` or ask for a Coohom Freeform scene task. Review the MCP permission prompts. If Lux3D returns an executor URL and requires a browser connection, open that exact URL yourself, sign in to Coohom, connect the page as instructed by the service, and return to Claude Code. Do not paste passwords, cookies, or authorization headers into chat.
+Restart Claude after installing or updating — MCP server settings are only read when a session starts. To update later:
 
-For a local trial, run `claude --plugin-dir /absolute/path/to/coohom-freeform-claude` from a terminal.
+```sh
+claude plugin marketplace update rose-coohom-freeform
+claude plugin update coohom-freeform-claude@rose-coohom-freeform
+```
+
+Check both servers start:
+
+```sh
+claude mcp list
+```
+
+Both `plugin:coohom-freeform-claude:…` entries should show **Connected**.
+
+## Use: put something on a wall of your Coohom room
+
+1. Open your project in Coohom in the browser.
+2. Ask Claude, e.g. "Using /coohom-freeform, build this TV unit on the plain wall of my room" and attach a reference image.
+3. When Claude gives you a Coohom **executor** link, open it and sign in if asked. Leave it open.
+4. In your project tab, open **Advanced tool → Custom modeling**. When Coohom asks "An MCP connection is active in another window. Disconnect and reconnect?", choose **Confirm**. Claude now edits your room directly.
+5. Claude locates the wall, builds the object, applies materials and lights, and checks the result.
+6. Review it, then click **Finish** and **Save** in Coohom yourself. Claude does not save for you.
+
+Don't refresh the Coohom tabs while Claude is working — unsaved Coohom work is lost on refresh.
+
+## What's in the plugin
+
+| Path | Purpose |
+|---|---|
+| `.mcp.json` | Starts `freeform-modeling-mcp` in stdio mode and Lux3D through the proxy |
+| `bin/lux3d-proxy.mjs` | Makes `@manycore/coohom-lux3d-mcp` work in Claude Code (adds the thread ID it requires; works around its silent exit when launched via npm's bin link). Set `LUX3D_THREAD_ID` to pin the ID |
+| `skills/coohom-freeform/SKILL.md` | The workflow Claude follows |
+| `skills/coohom-freeform/references/recipes.md` | Tested KDS script templates: transactions, materials, textures, custom shapes, wall markers, lights |
+| `skills/coohom-freeform/references/troubleshooting.md` | Known errors and fixes |
+| `skills/coohom-freeform/scripts/textures.mjs` | Generates tileable wood-grain and marble PNGs sized for Coohom's script limit |
+
+## Known limitations
+
+- Coohom catalog search in `freeform-modeling-mcp` 1.1.3 fails (`unusableType` error), so decor is modeled from primitives or generated with Lux3D.
+- The executor page always opens a new empty design; editing an existing room goes through Custom modeling (step 4 above).
+- Floor-plan walls are not visible to scripts; Claude finds them with temporary marker posts and the 2D Top view.
+- The Lux3D proxy uses a POSIX shell (`realpath`, `command -v`): macOS and Linux. Windows is untested.
+- The servers are pulled from npm as `latest`; upstream changes can break things — see troubleshooting.
+
+For a local trial, run `claude --plugin-dir /absolute/path/to/coohom-freeform-claude`.
 
 ## Claude.ai and Cowork
 
-This package targets Claude Code. It is not a Claude.ai connector or Cowork plugin. Those surfaces have different component and MCP support.
+This package targets Claude Code. It is not a Claude.ai connector or Cowork plugin.
 
 ## Validation status
 
-This is a community adaptation. The plugin and marketplace manifests pass `claude plugin validate`. MCP startup and Coohom generation/import still need verification on a machine with Node.js/npm and a signed-in Coohom account; generation can use credits. No scene is generated or modified during installation.
+Tested end to end on macOS (Apple Silicon, Node 26) on 2026-11-19: both servers connected, a textured live-edge TV unit with lights was built on a wall of an existing Coohom room via Custom modeling, and live render was checked on the executor page. Lux3D image-to-3D generation itself was not run (credits).
 
 ## Upstream
 
