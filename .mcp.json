@@ -2,11 +2,17 @@
   "mcpServers": {
     "freeform-modeling-mcp": {
       "command": "npx",
-      "args": ["--yes", "freeform-modeling-mcp@latest"]
+      "args": ["--yes", "freeform-modeling-mcp@latest", "start", "--stdio"]
     },
     "lux3d-mcp-server": {
       "command": "npx",
-      "args": ["--yes", "@manycore/coohom-lux3d-mcp@latest"]
+      "args": [
+        "--yes",
+        "-p",
+        "@manycore/coohom-lux3d-mcp@latest",
+        "-c",
+        "node \"$(realpath \"$(command -v lux3d-mcp-server)\")\""
+      ]
     }
   }
 }
